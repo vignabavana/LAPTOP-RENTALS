@@ -1,0 +1,26 @@
+@isTest 
+public class LaptopBookingHandlerTest {
+
+    @isTest
+    static void testLaptopBookingTrigger(){
+        
+        Laptop_Bookings__c testBooking = new Laptop_Bookings__c(
+            Consumer__c = 'SnapDeal',
+            Email__c = 'test@example.com',
+            Laptop_Names__c = 'Dell',
+            Total_No_Of_Laptops__c = '10',
+            Name = 'Test User',
+            how_many_months__c = '3'
+            );
+        
+        Test.startTest();
+        insert testBooking;
+        
+        testBooking.how_many_months__c = '4';
+        update testBooking;
+        
+        Test.stopTest();
+        Integer sentEmailCount = Limits.getEmailInvocations();
+        System.assertEquals(1, sentEmailCount, 'One email should have been sent');
+    }
+}
